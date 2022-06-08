@@ -12,7 +12,7 @@ export default function Notes() {
   }
 
   const changeData =(newData)=>{
-    console.log(newData)
+    // console.log(newData)
     setData(data.push(newData));
     console.log(data)
   }
