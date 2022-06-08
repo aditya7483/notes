@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Modal from './Modal';
 import NoteItem from './NoteItem';
 
 export default function Notes() {
@@ -8,7 +9,12 @@ export default function Notes() {
     let response = await fetch('/api/notes');
     let parsedData = await response.json();
     setData(parsedData)
-    // console.log(data);
+  }
+
+  const changeData =(newData)=>{
+    console.log(newData)
+    setData(data.push(newData));
+    console.log(data)
   }
 
   useEffect(() => {
@@ -17,16 +23,19 @@ export default function Notes() {
 
 
   return (
-    <div className='container'>
-      <div className='row'>
-        {
-          data.map((elem) => {
-            return <div className='col-md-4' key={elem.title}>
-              <NoteItem title={elem.title} desc={elem.description} date={elem.date} />
-            </div>
-          })
-        }
+    <>
+      <div className='container' style={{marginTop:"7rem"}}>
+        <div className='row'>
+          {
+            data.map((elem) => {
+              return <div className='col-md-4' key={elem.title}>
+                <NoteItem title={elem.title} desc={elem.description} date={elem.date} />
+              </div>
+            })
+          }
+        </div>
       </div>
-    </div>
+      <Modal changeData={changeData}/>
+    </>
   )
 }
