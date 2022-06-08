@@ -14,8 +14,7 @@ export default function Modal(props) {
     const handleSave = ()=>{
         let obj={
             title:myTitle,
-            description:desc,
-            date:Date.now()
+            description:desc
         }
         props.changeData(obj);
     }

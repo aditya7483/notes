@@ -33,17 +33,16 @@ export default function Stats() {
     };
 
     useEffect(() => {
-
         if (myChart !== null) {
             myChart.destroy();
         }
-
+// eslint-disable-next-line
         myChart = new Chart(
             document.getElementById('myChart'),
             config
         );
 
-    }, []);
+    }, [myChart]);
 
     return (
         <div style={{ marginTop: '7rem' }}>
