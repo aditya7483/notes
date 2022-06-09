@@ -4,7 +4,6 @@ import NoteItem from './NoteItem';
 
 export default function Notes() {
   const [data, setData] = useState([]);
-  // const [unsavedData, setUnsavedData] = useState([])
 
   async function fetchData() {
     let response = await fetch('/api/notes');
@@ -14,7 +13,6 @@ export default function Notes() {
 
   const changeData = (newData) => {
     setData(data.concat(newData));
-      // console.log(unsavedData)
   }
 
   useEffect(() => {
@@ -22,7 +20,7 @@ export default function Notes() {
     fetchData();
         
       
-    
+    // eslint-disable-next-line
   },[]);
 
 
@@ -34,13 +32,17 @@ export default function Notes() {
           {
             data.map((elem) => {
               return <div className='col-md-4  mb-4' key={elem._id}>
-                <NoteItem title={elem.title} desc={elem.description} date={elem.date} />
+                <NoteItem title={elem.title} desc={elem.description} date={elem.date} id={elem._id}/>
               </div>
             })
           }
         </div>
       </div>
-      <Modal changeData={changeData} />
+      {/* <!-- Button trigger modal --> */}
+      <button type="button" className="btn btn-primary add-notes" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Add Notes
+            </button>
+      <Modal what={'Add'} changeData={changeData} action={'POST'}/>
     </>
   )
 }

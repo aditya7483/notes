@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState,useEffect} from 'react'
 import PropTypes from 'prop-types'
 
 export default function Modal(props) {
     const [myTitle, setMyTitle] = useState('');
     const [desc, setDesc] = useState('');
-
+    
     // useEffect(() => {
     //     setMyTitle(props.initTitle)
     //     setDesc(props.initDesc)
@@ -18,7 +18,7 @@ export default function Modal(props) {
         setDesc(e.target.value);
     }
 
-    const create = async () => {
+    const create=async()=>{
         let res = await fetch(`/api/createNote`, {
             method: `POST`,
             headers: {
@@ -33,7 +33,7 @@ export default function Modal(props) {
         let data = await res.json();
         console.log(data)
     }
-    const update = async () => {
+    const update=async()=>{
         let res = await fetch(`/api/update/${props.itemId}`, {
             method: `PUT`,
             headers: {
@@ -57,11 +57,13 @@ export default function Modal(props) {
             _id: Date.now()
         }
 
-        if (props.action.length === 4) {
+        if(props.action.length===4)
+        {
             create()
         }
 
-        else{
+        else if(props.action==='PUT')
+        {
             update()
         }
 
@@ -96,7 +98,7 @@ export default function Modal(props) {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="submit" className={`btn btn-primary ${myTitle.length !== 0 && desc.length !== 0 ? '' : 'disabled'}`} data-bs-dismiss={`${myTitle.length !== 0 && desc.length !== 0 ? 'modal' : ''}`}>Save</button>
+                                <button type="submit" className={`btn btn-primary ${myTitle.length!==0?'':'disabled'}`} data-bs-dismiss={`${myTitle.length !== 0 &&desc.length !== 0 ? 'modal' : ''}` }>Save</button>
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             </div>
                         </form>
@@ -107,16 +109,16 @@ export default function Modal(props) {
     )
 }
 
-Modal.propTypes = {
-    initDesc: PropTypes.string.isRequired,
-    initTitle: PropTypes.string.isRequired,
-    what: PropTypes.string.isRequired,
-    action: PropTypes.string.isRequired,
-    _id: PropTypes.string
+Modal.propTypes={
+    initDesc:PropTypes.string.isRequired,
+    initTitle:PropTypes.string.isRequired,
+    what:PropTypes.string.isRequired,
+    action:PropTypes.string.isRequired,
+    _id:PropTypes.string
 }
 
 Modal.defaultProps = {
     initDesc: "",
     initTitle: "",
-    action: 'POST'
+    action:'POST'
 }
