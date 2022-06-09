@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import PropTypes from 'prop-types'
 
 export default function Modal(props) {
-    const [myTitle, setMyTitle] = useState('');
-    const [desc, setDesc] = useState('');
-
-    // useEffect(() => {
-    //     setMyTitle(props.initTitle)
-    //     setDesc(props.initDesc)
-    // }, []);
-
+    const [myTitle, setMyTitle] = useState(props.initTitle);
+    const [desc, setDesc] = useState(props.initDesc);
 
     const handleTitleChange = (e) => {
         setMyTitle(e.target.value);
@@ -29,11 +23,11 @@ export default function Modal(props) {
                 description: desc
             })
         })
-
+        // eslint-disable-next-line
         let data = await res.json();
-        console.log(data)
     }
     const update = async () => {
+        
         let res = await fetch(`/api/update/${props.itemId}`, {
             method: `PUT`,
             headers: {
@@ -44,35 +38,35 @@ export default function Modal(props) {
                 description: desc
             })
         })
-
+// eslint-disable-next-line
         let data = await res.json();
-        console.log(data)
     }
 
     const handleSave = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         let obj = {
             title: myTitle,
-            description: desc,
-            _id: Date.now()
+            description: desc
         }
-
-        if (props.action.length === 4) {
+        console.log(props.action)
+        if (props.action==="POST") {
             create()
+            props.changeData(obj);
+            props.empty();
         }
-
+        
         else{
             update()
+            props.empty();
         }
 
-        props.changeData(obj);
     }
 
 
     return (
         <div>
             {/* <!-- Modal --> */}
-            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal fade" id={`staticBackdrop${props.no}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog  modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -112,7 +106,9 @@ Modal.propTypes = {
     initTitle: PropTypes.string.isRequired,
     what: PropTypes.string.isRequired,
     action: PropTypes.string.isRequired,
-    _id: PropTypes.string
+    _id: PropTypes.string,
+    empty:PropTypes.func,
+    changeData:PropTypes.func    
 }
 
 Modal.defaultProps = {
