@@ -43,13 +43,13 @@ export default function Stats(props) {
                 options: {}
             };
 
+            // eslint-disable-next-line
             myChart = new Chart(
                 document.getElementById('myChart'),
                 config
                 );
             })}
             count++;
-            // eslint-disable-next-line
         
     }, []);
 
