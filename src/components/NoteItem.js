@@ -13,7 +13,7 @@ export default function NoteItem(props) {
 
     return (
         <div>
-            <div className="card" style={{ minWidth: "18rem", minHeight: "12rem" }}>
+            <div className="card " style={{ minWidth: "18rem", minHeight: "12rem" }}>
                 <div className="card-body" style={{ boxShadow: " black 1px 1px 3px 0px", paddingBottom: '0px' }}>
 
                     <h5 className="card-title text-center mb-5">{props.title.toUpperCase()}</h5>

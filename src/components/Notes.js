@@ -46,7 +46,7 @@ export default function Notes() {
               {
                 data.map((elem) => {
                   count++;
-                  return <div className='col-md-4  mb-4' key={elem._id}>
+                  return <div className='col-lg-4  mb-4' key={elem._id}>
                     <NoteItem title={elem.title} desc={elem.description} date={elem.date} id={elem._id} no={count} empty={emptyData} changeData={changeData} />
                   </div>
                 })

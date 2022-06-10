@@ -1,7 +1,29 @@
 .add-notes{
     position: fixed;
     left: 89vw;
-    top: 88vh;
+    top: 85vh;
     padding: 11px;
     border-radius: 16px;
+    z-index: 1000;
+}
+
+@media only screen and (max-width:904px) and (min-width:587px){
+    .add-notes{
+        left:82vw;
+    }
+}
+
+@media screen and (max-width:586px)and (min-width:400px){
+    
+    .add-notes{
+        left:75vw;
+    }
+}
+@media screen and (max-width:399px){
+    
+    .add-notes{
+        left: 72vw;
+        padding: 7px 6px;
+        border-radius: 9px;
+    }
 }
