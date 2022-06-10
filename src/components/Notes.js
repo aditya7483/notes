@@ -54,7 +54,7 @@ export default function Notes() {
             </div>
           </div>
 
-          <button type="button" className="btn btn-primary add-notes" data-bs-toggle="modal" data-bs-target="#staticBackdrop0">
+          <button type="button" className="btn btn-primary add-notes my-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop0">
             Add Notes
           </button>
           <Modal what={'Add'} changeData={changeData} empty={emptyData} action={'POST'} no={0} />
