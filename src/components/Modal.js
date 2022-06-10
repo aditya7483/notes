@@ -13,7 +13,7 @@ export default function Modal(props) {
     }
 
     const create = async () => {
-        let res = await fetch(`/api/createNote`, {
+        let res = await fetch(`https://notes74.herokuapp.com/api/createNote`, {
             method: `POST`,
             headers: {
                 'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export default function Modal(props) {
     }
     const update = async () => {
         
-        let res = await fetch(`/api/update/${props.itemId}`, {
+        let res = await fetch(`https://notes74.herokuapp.com/api/update/${props.itemId}`, {
             method: `PUT`,
             headers: {
                 'Content-Type': 'application/json'

@@ -7,14 +7,24 @@ import Spinner from './Spinner';
 export default function Notes() {
   let count = 0;
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [noNotes, setNoNotes] = useState(false)
 
   async function fetchData() {
-    setLoading(true)
-    let response = await fetch('/api/notes');
+    
+    let response = await fetch('https://notes74.herokuapp.com/api/notes');
     let parsedData = await response.json();
-    setData(parsedData)
-    setLoading(false)
+    if(parsedData.length===0)
+    {
+      setLoading(false)
+      setNoNotes(true);
+    }
+    else
+    {
+      setNoNotes(false);
+      setData(parsedData)
+      setLoading(false)
+    }
   }
 
   const changeData = (newData) => {
@@ -27,7 +37,13 @@ export default function Notes() {
 
   useEffect(() => {
     if (data.length === 0)
-      fetchData();
+      {
+        setLoading(true)
+        setTimeout(() => {
+          
+          fetchData();
+        }, 1000);
+      }
 
 
     // eslint-disable-next-line
@@ -37,9 +53,9 @@ export default function Notes() {
 
   return (
     <>
-      {loading && <Spinner />}
-
-      {!loading &&
+      {(!loading&&noNotes)&&<h3 className='text-center' style={{ marginTop: "7rem" }}>CLICK ON ADD NOTES TO CREATE NOTES</h3>}
+      {(loading) && <Spinner />}
+      {(!loading||!noNotes)&&
         <>
           <div className='container' style={{ marginTop: "7rem" }}>
             <div className='row'>
@@ -53,13 +69,15 @@ export default function Notes() {
               }
             </div>
           </div>
+          </>
+        }
 
           <button type="button" className="btn btn-primary add-notes my-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop0">
             Add Notes
           </button>
           <Modal what={'Add'} changeData={changeData} empty={emptyData} action={'POST'} no={0} />
-        </>
-      }
+        
+      
     </>
   )
 }
