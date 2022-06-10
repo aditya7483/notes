@@ -48,7 +48,6 @@ export default function Modal(props) {
             title: myTitle,
             description: desc
         }
-        console.log(props.action)
         if (props.action==="POST") {
             create()
             props.changeData(obj);

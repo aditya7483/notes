@@ -4,7 +4,6 @@ import Modal from './Modal'
 export default function NoteItem(props) {
 
     const handleDelete = async () => {
-        console.log(props.id)
         // eslint-disable-next-line
         let res = await fetch(`/api/deleteNote/${props.id}`, {
             method: `DELETE`

@@ -1,8 +1,7 @@
 import React,{useEffect} from 'react'
-import { Chart,registerables } from 'chart.js'
+import { Chart, registerables } from 'chart.js'
 
-export default function Stats() {
-
+export default function Stats(props) {
     let myChart = null;
     Chart.register(...registerables)
 
@@ -16,33 +15,43 @@ export default function Stats() {
         'Saturday'
     ];
 
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'Notes Added or Updated',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 0],
-        }]
-    };
+    
 
-    const config = {
-        type: 'line',
-        data: data,
-        options: {}
-    };
 
     useEffect(() => {
-        if (myChart !== null) {
+        let count=0;
+        if( count === 0)
+        {if (myChart !== null) {
             myChart.destroy();
         }
-// eslint-disable-next-line
-        myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
+        props.statsData.then((res)=>{
+            
+            const data = {
+                labels: labels,
+                datasets: [{
+                    label: 'Notes Added or Updated',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: res
+                }]
+            };
 
-    }, [myChart]);
+            
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+
+            myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+                );
+            })}
+            count++;
+            // eslint-disable-next-line
+        
+    }, []);
 
     return (
         <div style={{ marginTop: '7rem' }}>
@@ -52,3 +61,4 @@ export default function Stats() {
         </div>
     )
 }
+
