@@ -12,7 +12,7 @@ export default function Notes() {
 
   async function fetchData() {
     
-    let response = await fetch('https://notes74.herokuapp.com/api/notes');
+    let response = await fetch('https://notes74.herokuapp.com/api/notes/getnotes');
     let parsedData = await response.json();
     if(parsedData.length===0)
     {

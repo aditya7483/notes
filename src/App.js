@@ -9,7 +9,7 @@ import Stats from './components/Stats';
 export default function App() {
   
   const getData= async ()=>{
-    let response = await fetch('https://notes74.herokuapp.com/api/notes');
+    let response = await fetch('https://notes74.herokuapp.com/api/notes/getnotes');
     let parsedData = await response.json();
     let arr = [];
     let results = [];
