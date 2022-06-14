@@ -44,13 +44,9 @@ export default function Modal(props) {
 
     const handleSave = async (e) => {
         e.preventDefault();
-        let obj = {
-            title: myTitle,
-            description: desc
-        }
+        
         if (props.action==="POST") {
             create()
-            props.changeData(obj);
             props.empty();
         }
         
@@ -106,8 +102,7 @@ Modal.propTypes = {
     what: PropTypes.string.isRequired,
     action: PropTypes.string.isRequired,
     _id: PropTypes.string,
-    empty:PropTypes.func,
-    changeData:PropTypes.func    
+    empty:PropTypes.func
 }
 
 Modal.defaultProps = {

@@ -27,10 +27,6 @@ export default function Notes() {
     }
   }
 
-  const changeData = (newData) => {
-    setData(data.concat(newData));
-  }
-
   const emptyData = () => {
     setData([]);
   }
@@ -63,7 +59,7 @@ export default function Notes() {
                 data.map((elem) => {
                   count++;
                   return <div className='col-lg-4  mb-4' key={elem._id}>
-                    <NoteItem title={elem.title} desc={elem.description} date={elem.date} id={elem._id} no={count} empty={emptyData} changeData={changeData} />
+                    <NoteItem title={elem.title} desc={elem.description} date={elem.date} id={elem._id} no={count} empty={emptyData}/>
                   </div>
                 })
               }
@@ -75,7 +71,7 @@ export default function Notes() {
           <button type="button" className="btn btn-primary add-notes my-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop0">
             Add Notes
           </button>
-          <Modal what={'Add'} changeData={changeData} empty={emptyData} action={'POST'} no={0} />
+          <Modal what={'Add'} empty={emptyData} action={'POST'} no={0} />
         
       
     </>

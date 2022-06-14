@@ -5,9 +5,11 @@ export default function NoteItem(props) {
 
     const handleDelete = async () => {
         // eslint-disable-next-line
-        let res = await fetch(`https://notes74.herokuapp.com/api/deleteNote/${props.id}`, {
+        let res = await fetch(`https://notes74.herokuapp.com/api/notes/deleteNote/${props.id}`, {
             method: `DELETE`
         })
+
+        //empty the data array to fetch from backend again after deleting
         props.empty();
     }
 
@@ -24,10 +26,10 @@ export default function NoteItem(props) {
 
                         <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${props.no}`} style={{ marginTop: '19px', padding: '3px 6px' }}><i className="fa-solid fa-pencil"></i></button>
 
-                        <button type="button" className="btn btn-secondary bg-danger" data-bs-toggle="modal" data-bs-target="#confirm-delete"style={{ marginTop: '19px', padding: '3px 6px' }}><i className="fa-solid fa-trash"></i></button>
+                        <button type="button" className="btn btn-secondary bg-danger" data-bs-toggle="modal" data-bs-target={`#confirm-delete${props.no}`}style={{ marginTop: '19px', padding: '3px 6px' }}><i className="fa-solid fa-trash"></i></button>
                         
                         
-                        <div className="modal fade" id="confirm-delete" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div className="modal fade" id={`confirm-delete${props.no}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div className="modal-dialog modal-dialog-centered">
                                 <div className="modal-content">
                                     <div className="modal-header">
@@ -46,7 +48,7 @@ export default function NoteItem(props) {
                         </div>
                     </div>
 
-                    <Modal what={'Edit'} empty={props.empty} initTitle={props.title} initDesc={props.desc} action={'PUT'} itemId={props.id} no={props.no} changeData={props.changeData} />
+                    <Modal what={'Edit'} empty={props.empty} initTitle={props.title} initDesc={props.desc} action={'PUT'} itemId={props.id} no={props.no} />
 
                 </div>
             </div>
