@@ -1,4 +1,5 @@
 import React from 'react'
+import Login from './Login'
 
 export default function Navbar() {
     return (
@@ -19,16 +20,17 @@ export default function Navbar() {
                             </li>
                         </ul>
 
-                        {/* <form className="d-flex" role="search">
-                            <button type="button" className="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#LoginModal">
+                        <form className="d-flex" role="search">
+                            <button type="button" className="btn btn-outline-primary border-primary fw-bold border border-3" data-bs-toggle="modal" data-bs-target="#LoginModal">
                                 Login
                             </button>
-                            <Login />
-                        </form> */}
+                            
+                        </form>
 
                     </div>
                 </div>
             </nav>
+            <Login/>
         </div>
     )
 }

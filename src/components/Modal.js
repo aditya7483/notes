@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 export default function Modal(props) {
     const [myTitle, setMyTitle] = useState(props.initTitle);
     const [desc, setDesc] = useState(props.initDesc);
+    const [tooSmall, setTooSmall] = useState(false)
 
     const handleTitleChange = (e) => {
         setMyTitle(e.target.value);
@@ -12,6 +13,7 @@ export default function Modal(props) {
         setDesc(e.target.value);
     }
 
+    //send the title and desc to backend
     const create = async () => {
         let res = await fetch(`https://notes74.herokuapp.com/api/notes/createNote`, {
             method: `POST`,
@@ -25,7 +27,12 @@ export default function Modal(props) {
         })
         // eslint-disable-next-line
         let data = await res.json();
+        //cleaning up the previous contents of the modal which by default saves the last typed content only when the action is create.
+        setDesc('')
+        setMyTitle('')        
     }
+
+    //send the updated title or description to backend
     const update = async () => {
         
         let res = await fetch(`https://notes74.herokuapp.com/api/notes/update/${props.itemId}`, {
@@ -38,19 +45,28 @@ export default function Modal(props) {
                 description: desc
             })
         })
-// eslint-disable-next-line
+        // eslint-disable-next-line
         let data = await res.json();
     }
 
     const handleSave = async (e) => {
         e.preventDefault();
+
+        if(myTitle.length===0||desc.length===0)
+        {
+           setTooSmall(true)
+        }
         
-        if (props.action==="POST") {
+        //if creating new note
+        else if (props.action==="POST") {
+            setTooSmall(false)
             create()
             props.empty();
         }
         
+        //if updating existing note
         else{
+            setTooSmall(false)
             update()
             props.empty();
         }
@@ -73,15 +89,15 @@ export default function Modal(props) {
                         <form className="row g-3 needs-validation" noValidate onSubmit={handleSave}>
                             <div className="modal-body">
                                 <div className="mb-3">
-                                    <label htmlFor="validationCustom01" className="form-label">Title</label>
-                                    <input type="text" className="form-control" id="validationCustom01" required placeholder="Enter the Title" value={myTitle} onChange={handleTitleChange} />
+                                    <label htmlFor={`validationCustom01${props.no}`} className="form-label">Title</label>
+                                    <input type="text" className="form-control" id={`validationCustom01${props.no}`} required placeholder="Enter the Title" value={myTitle} onChange={handleTitleChange} />
                                     <div className="valid-feedback">
                                         Looks good!
                                     </div>
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="validationCustom02" className="form-label">Description</label>
-                                    <textarea className="form-control" id="validationCustom02" required placeholder='Enter the Description' rows="3" value={desc} onChange={handleDescChange}></textarea>
+                                    <label htmlFor={`validationCustom02${props.no}`} className="form-label">Description</label>
+                                    <textarea className="form-control" id={`validationCustom02${props.no}`} required placeholder='Enter the Description' rows="3" value={desc} onChange={handleDescChange}></textarea>
                                 </div>
                             </div>
                             <div className="modal-footer">

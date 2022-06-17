@@ -22,7 +22,7 @@ export default function NoteItem(props) {
                     <p className="card-text">{props.desc}</p>
 
 
-                    <div className='d-flex justify-content-between'>
+                    <div className='d-flex justify-content-between mb-3'>
 
                         <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${props.no}`} style={{ marginTop: '19px', padding: '3px 6px' }}><i className="fa-solid fa-pencil"></i></button>
 
