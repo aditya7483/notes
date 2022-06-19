@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 export default function Modal(props) {
     const [myTitle, setMyTitle] = useState(props.initTitle);
     const [desc, setDesc] = useState(props.initDesc);
-    const [tooSmall, setTooSmall] = useState(false)
 
     const handleTitleChange = (e) => {
         setMyTitle(e.target.value);
@@ -15,10 +14,12 @@ export default function Modal(props) {
 
     //send the title and desc to backend
     const create = async () => {
-        let res = await fetch(`https://notes74.herokuapp.com/api/notes/createNote`, {
+        // let res = await fetch(`https://notes74.herokuapp.com/api/notes/createNote`, {
+        let res = await fetch(`http://localhost:3001/api/notes/createNote`, {
             method: `POST`,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'auth-token':`${props.authToken}`
             },
             body: JSON.stringify({
                 title: myTitle,
@@ -35,10 +36,12 @@ export default function Modal(props) {
     //send the updated title or description to backend
     const update = async () => {
         
-        let res = await fetch(`https://notes74.herokuapp.com/api/notes/update/${props.itemId}`, {
+        // let res = await fetch(`https://notes74.herokuapp.com/api/notes/update/${props.itemId}`, {
+        let res = await fetch(`http://localhost:3001/api/notes/updateNote/${props.itemId}`, {
             method: `PUT`,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'auth-token':`${props.authToken}`
             },
             body: JSON.stringify({
                 title: myTitle,
@@ -52,21 +55,15 @@ export default function Modal(props) {
     const handleSave = async (e) => {
         e.preventDefault();
 
-        if(myTitle.length===0||desc.length===0)
-        {
-           setTooSmall(true)
-        }
         
         //if creating new note
-        else if (props.action==="POST") {
-            setTooSmall(false)
+        if (props.action==="POST") {
             create()
             props.empty();
         }
         
         //if updating existing note
         else{
-            setTooSmall(false)
             update()
             props.empty();
         }

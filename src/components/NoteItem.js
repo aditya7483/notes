@@ -4,13 +4,19 @@ import Modal from './Modal'
 export default function NoteItem(props) {
 
     const handleDelete = async () => {
-        // eslint-disable-next-line
-        let res = await fetch(`https://notes74.herokuapp.com/api/notes/deleteNote/${props.id}`, {
-            method: `DELETE`
-        })
+        if (props.authToken.length !== 0) {// eslint-disable-next-line
+            // let res = await fetch(`https://notes74.herokuapp.com/api/notes/deleteNote/${props.id}`, {
+            let res = await fetch(`http://localhost:3001/api/notes/deleteNote/${props.id}`, {
+                method: `DELETE`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': `${props.authToken}`
+                }
+            })
 
-        //empty the data array to fetch from backend again after deleting
-        props.empty();
+            //empty the data array to fetch from backend again after deleting
+            props.empty();
+        }
     }
 
     return (
@@ -26,9 +32,9 @@ export default function NoteItem(props) {
 
                         <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target={`#staticBackdrop${props.no}`} style={{ marginTop: '19px', padding: '3px 6px' }}><i className="fa-solid fa-pencil"></i></button>
 
-                        <button type="button" className="btn btn-secondary bg-danger" data-bs-toggle="modal" data-bs-target={`#confirm-delete${props.no}`}style={{ marginTop: '19px', padding: '3px 6px' }}><i className="fa-solid fa-trash"></i></button>
-                        
-                        
+                        <button type="button" className="btn btn-secondary bg-danger" data-bs-toggle="modal" data-bs-target={`#confirm-delete${props.no}`} style={{ marginTop: '19px', padding: '3px 6px' }}><i className="fa-solid fa-trash"></i></button>
+
+
                         <div className="modal fade" id={`confirm-delete${props.no}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div className="modal-dialog modal-dialog-centered">
                                 <div className="modal-content">
@@ -40,7 +46,7 @@ export default function NoteItem(props) {
                                         <p>Are you sure you want to permanently delete this item?</p>
                                     </div>
                                     <div className="modal-footer">
-                                        <button type="button" className="btn bg-danger" onClick={handleDelete} style={{color:'white'}} data-bs-dismiss="modal">Confirm</button>
+                                        <button type="button" className="btn bg-danger" onClick={handleDelete} style={{ color: 'white' }} data-bs-dismiss="modal">Confirm</button>
                                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </div>
@@ -48,7 +54,7 @@ export default function NoteItem(props) {
                         </div>
                     </div>
 
-                    <Modal what={'Edit'} empty={props.empty} initTitle={props.title} initDesc={props.desc} action={'PUT'} itemId={props.id} no={props.no} />
+                    <Modal what={'Edit'} empty={props.empty} initTitle={props.title} initDesc={props.desc} action={'PUT'} itemId={props.id} no={props.no} authToken={props.authToken} />
 
                 </div>
             </div>
