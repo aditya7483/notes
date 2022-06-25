@@ -16,7 +16,8 @@ export default function App() {
     if(authToken)
     {try {
       let myauth = localStorage.getItem('auth-token')
-      let res = await fetch('http://localhost:3001/api/auth/getuser', {
+      let res = await fetch('https://notes74.herokuapp.com/api/auth/getuser', {
+      // let res = await fetch('http://localhost:3001/api/auth/getuser', {
               method: 'GET',
               headers: {
                   'Content-Type': 'application/json',
@@ -43,8 +44,8 @@ export default function App() {
 
   const getData = async () => {
     if (authToken) {
-      // let response = await fetch('https://notes74.herokuapp.com/api/notes/getnotes');
-      let response = await fetch('http://localhost:3001/api/notes/getNotes', {
+      let response = await fetch('https://notes74.herokuapp.com/api/notes/getnotes',{
+      // let response = await fetch('http://localhost:3001/api/notes/getNotes', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

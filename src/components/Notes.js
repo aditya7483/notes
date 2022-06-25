@@ -14,8 +14,8 @@ export default function Notes(props) {
     if (props.loggedIn) {
       try {
         let authToken = localStorage.getItem('auth-token')
-        // let response = await fetch('https://notes74.herokuapp.com/api/notes/getNotes');
-        let response = await fetch(`http://localhost:3001/api/notes/getNotes`, {
+        let response = await fetch('https://notes74.herokuapp.com/api/notes/getNotes',{
+        // let response = await fetch(`http://localhost:3001/api/notes/getNotes`, {
           method:'GET',
           headers: {
             'Content-Type': 'application/json',

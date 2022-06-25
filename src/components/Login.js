@@ -24,7 +24,8 @@ export default function Login(props) {
     }
 
     const getAuth = async()=>{
-        let res = await fetch('http://localhost:3001/api/auth/login', {
+        let res = await fetch('https://notes74.herokuapp.com/api/auth/login', {
+        // let res = await fetch('http://localhost:3001/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,7 +42,6 @@ export default function Login(props) {
             setErrors(data.err)
         }
         else{
-            console.log(data)
             handleChange()
             localStorage.setItem('auth-token',data.authToken)
             window.location.reload()
