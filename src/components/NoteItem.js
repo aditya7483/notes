@@ -4,19 +4,20 @@ import Modal from './Modal'
 export default function NoteItem(props) {
 
     const handleDelete = async () => {
-        if (props.authToken.length !== 0) {// eslint-disable-next-line
-            // let res = await fetch(`https://notes74.herokuapp.com/api/notes/deleteNote/${props.id}`, {
-            let res = await fetch(`http://localhost:3001/api/notes/deleteNote/${props.id}`, {
-                method: `DELETE`,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'auth-token': `${props.authToken}`
-                }
-            })
+        let authToken = localStorage.getItem('auth-token')
+        // eslint-disable-next-line
+        // let res = await fetch(`https://notes74.herokuapp.com/api/notes/deleteNote/${props.id}`, {
+        let res = await fetch(`http://localhost:3001/api/notes/deleteNote/${props.id}`, {
+            method: `DELETE`,
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': authToken
+            }
+        })
 
-            //empty the data array to fetch from backend again after deleting
-            props.empty();
-        }
+        //empty the data array to fetch from backend again after deleting
+        props.empty();
+
     }
 
     return (

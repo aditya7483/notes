@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect} from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Notes from './components/Notes'
@@ -8,14 +8,41 @@ import Stats from './components/Stats';
 
 export default function App() {
 
-  const [authToken, setAuthToken] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  const changeAuthToken=(newToken)=>{
-    setAuthToken(newToken)
+  let authToken = localStorage.getItem('auth-token')
+
+  const fetchUserData= async()=>{
+    if(authToken)
+    {try {
+      let myauth = localStorage.getItem('auth-token')
+      let res = await fetch('http://localhost:3001/api/auth/getuser', {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'auth-token':myauth
+              }
+          })
+          let data = await res.json();
+          setLoggedIn(true)
+    } catch (err) {
+      setLoggedIn(false)
+    }}
+    else{
+      setLoggedIn(false)
+    }
+         
   }
 
+  useEffect(()=>{
+    if(!loggedIn)
+    {
+      fetchUserData()
+    }
+  })
+
   const getData = async () => {
-    if (authToken.length !== 0) {
+    if (authToken) {
       // let response = await fetch('https://notes74.herokuapp.com/api/notes/getnotes');
       let response = await fetch('http://localhost:3001/api/notes/getNotes', {
         method: 'GET',
@@ -48,9 +75,9 @@ export default function App() {
   return (
     <div>
       <BrowserRouter>
-        <Navbar setAuthToken={changeAuthToken}/>
+        <Navbar loggedIn={loggedIn}/>
         <Routes>
-          <Route exact path="/" key="notes" element={<Notes authToken={authToken} />} />
+          <Route exact path="/" key="notes" element={<Notes loggedIn={loggedIn}/>} />
           <Route exact path="/stats" key="stats" element={<Stats statsData={dataArray} />} />
         </Routes>
       </BrowserRouter>

@@ -23,8 +23,7 @@ export default function Login(props) {
         setPassword('');
     }
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+    const getAuth = async()=>{
         let res = await fetch('http://localhost:3001/api/auth/login', {
             method: 'POST',
             headers: {
@@ -42,11 +41,18 @@ export default function Login(props) {
             setErrors(data.err)
         }
         else{
+            console.log(data)
             handleChange()
-            props.setAuthToken(data.authToken)
-            
+            localStorage.setItem('auth-token',data.authToken)
+            window.location.reload()
         }
     }
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        getAuth()
+    }
+    
     const handleSignup = async (e) => {
         e.preventDefault();
         let res = await fetch('http://localhost:3001/api/auth/signup', {
@@ -67,7 +73,7 @@ export default function Login(props) {
             setErrors(data.err)
         }
         else{
-            setLogin(true)
+            getAuth()
         }
     }
 

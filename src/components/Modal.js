@@ -14,12 +14,13 @@ export default function Modal(props) {
 
     //send the title and desc to backend
     const create = async () => {
+        let authToken = localStorage.getItem('auth-token')
         // let res = await fetch(`https://notes74.herokuapp.com/api/notes/createNote`, {
         let res = await fetch(`http://localhost:3001/api/notes/createNote`, {
             method: `POST`,
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token':`${props.authToken}`
+                'auth-token':authToken
             },
             body: JSON.stringify({
                 title: myTitle,
@@ -28,6 +29,7 @@ export default function Modal(props) {
         })
         // eslint-disable-next-line
         let data = await res.json();
+        console.log(data)
         //cleaning up the previous contents of the modal which by default saves the last typed content only when the action is create.
         setDesc('')
         setMyTitle('')        
@@ -35,13 +37,13 @@ export default function Modal(props) {
 
     //send the updated title or description to backend
     const update = async () => {
-        
+        let authToken = localStorage.getItem('auth-token')
         // let res = await fetch(`https://notes74.herokuapp.com/api/notes/update/${props.itemId}`, {
         let res = await fetch(`http://localhost:3001/api/notes/updateNote/${props.itemId}`, {
             method: `PUT`,
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token':`${props.authToken}`
+                'auth-token':authToken
             },
             body: JSON.stringify({
                 title: myTitle,

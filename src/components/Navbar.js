@@ -3,6 +3,12 @@ import {Link} from 'react-router-dom'
 import Login from './Login'
 
 export default function Navbar(props) {
+
+    const handleLogout = ()=>{
+        localStorage.removeItem('auth-token')
+        window.location.reload()
+    }
+    
     return (
         <div>
             <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
@@ -22,16 +28,19 @@ export default function Navbar(props) {
                         </ul>
 
                         <form className="d-flex" role="search">
-                            <button type="button" className="btn btn-outline-primary border-primary fw-bold border border-3" data-bs-toggle="modal" data-bs-target="#LoginModal">
+                            {!props.loggedIn?<button type="button" className="btn btn-outline-primary border-primary fw-bold border border-3" data-bs-toggle="modal" data-bs-target="#LoginModal">
                                 Login
-                            </button>
+                            </button>:
+                            <button type="button" className="btn btn-outline-secondary border-secondary fw-bold border border-3" onClick={handleLogout}>
+                                Logout
+                            </button>}
                             
                         </form>
 
                     </div>
                 </div>
             </nav>
-            <Login setAuthToken={props.setAuthToken}/>
+            <Login/>
         </div>
     )
 }

@@ -11,27 +11,34 @@ export default function Notes(props) {
   const [noNotes, setNoNotes] = useState(false)
 
   async function fetchData() {
-    if (props.authToken.length !== 0) {
-      // let response = await fetch('https://notes74.herokuapp.com/api/notes/getNotes');
-      let response = await fetch(`http://localhost:3001/api/notes/getNotes`, {
-        method:'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'auth-token': `${props.authToken}`
+    if (props.loggedIn) {
+      try {
+        let authToken = localStorage.getItem('auth-token')
+        // let response = await fetch('https://notes74.herokuapp.com/api/notes/getNotes');
+        let response = await fetch(`http://localhost:3001/api/notes/getNotes`, {
+          method:'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': authToken
+          }
+        });
+        let parsedData = await response.json();
+        if (parsedData.length === 0) {
+          setNoNotes(true);
+          setLoading(false)
         }
-      });
-      let parsedData = await response.json();
-      if (parsedData.length === 0) {
+        else {
+          setNoNotes(false);
+          setData(parsedData)
+          setLoading(false)
+        }
+      } catch (err) {
         setLoading(false)
-        setNoNotes(true);
-      }
-      else {
-        setNoNotes(false);
-        setData(parsedData)
-        setLoading(false)
+        setNoNotes(true)
       }
     }
     else{
+
       setNoNotes(true)
       setLoading(false)
     }
@@ -49,13 +56,13 @@ export default function Notes(props) {
       }, 1200);
     }
     // eslint-disable-next-line
-  }, [data]);
+  },[props.loggedIn,data]);
 
 
 
   return (
     <>
-      {(!loading && noNotes) && <h3 className='text-center' style={{ marginTop: "7rem" }}>CLICK ON ADD NOTES TO CREATE NOTES</h3>}
+      {(!loading && noNotes) && <h3 className='text-center' style={{ marginTop: "7rem" }}>{props.loggedIn?'CLICK ON ADD NOTES TO CREATE NOTES':'PLEASE LOGIN TO CREATE NOTES'}</h3>}
       {(loading) && <Spinner />}
       {(!loading || !noNotes) &&
         <>
@@ -65,7 +72,7 @@ export default function Notes(props) {
                 data.map((elem) => {
                   count++;
                   return <div className='col-lg-4  mb-4' key={elem._id}>
-                    <NoteItem title={elem.title} desc={elem.description} authToken={props.authToken} date={elem.date} id={elem._id} no={count} empty={emptyData} />
+                    <NoteItem title={elem.title} desc={elem.description} date={elem.date} id={elem._id} no={count} empty={emptyData} />
                   </div>
                 })
               }
@@ -74,10 +81,10 @@ export default function Notes(props) {
         </>
       }
 
-      <button type="button" className="btn btn-primary add-notes my-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop-1">
+      {props.loggedIn&&<button type="button" className="btn btn-primary add-notes my-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop-1">
         Add Notes
-      </button>
-      <Modal what={'Add'} empty={emptyData} action={'POST'} no={'-1'} authToken={props.authToken} />
+      </button>}
+      <Modal what={'Add'} empty={emptyData} action={'POST'} no={'-1'} />
 
 
     </>
