@@ -24,23 +24,18 @@ export default function Notes(props) {
         });
         let parsedData = await response.json();
         if (parsedData.length === 0) {
-          setNoNotes(true);
-          setLoading(false)
+          setNoNotes(true)
         }
         else {
           setNoNotes(false);
           setData(parsedData)
-          setLoading(false)
         }
       } catch (err) {
-        setLoading(false)
         setNoNotes(true)
       }
     }
     else{
-
       setNoNotes(true)
-      setLoading(false)
     }
   }
 
@@ -53,6 +48,7 @@ export default function Notes(props) {
       setLoading(true)
       setTimeout(() => {
         fetchData();
+        setLoading(false)
       }, 1200);
     }
     // eslint-disable-next-line

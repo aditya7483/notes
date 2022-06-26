@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function Login(props) {
+export default function Login() {
 
     const [login, setLogin] = useState(true)
     const [username, setUsername] = useState('');
@@ -55,7 +55,8 @@ export default function Login(props) {
     
     const handleSignup = async (e) => {
         e.preventDefault();
-        let res = await fetch('http://localhost:3001/api/auth/signup', {
+        let res = await fetch('https://notes74.herokuapp.com/api/auth/signup', {
+        // let res = await fetch('http://localhost:3001/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
