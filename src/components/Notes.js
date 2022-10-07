@@ -5,6 +5,8 @@ import Spinner from './Spinner';
 
 
 export default function Notes(props) {
+  // const link = 'http://localhost:3001'
+  const link = 'https://notes74.herokuapp.com'
   let count = 0;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,9 +16,8 @@ export default function Notes(props) {
     if (props.loggedIn) {
       try {
         let authToken = localStorage.getItem('auth-token')
-        let response = await fetch('https://notes74.herokuapp.com/api/notes/getNotes',{
-        // let response = await fetch(`http://localhost:3001/api/notes/getNotes`, {
-          method:'GET',
+        let response = await fetch(`${link}/api/notes/getNotes`, {
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             'auth-token': authToken
@@ -34,7 +35,7 @@ export default function Notes(props) {
         setNoNotes(true)
       }
     }
-    else{
+    else {
       setNoNotes(true)
     }
   }
@@ -52,13 +53,13 @@ export default function Notes(props) {
       }, 1200);
     }
     // eslint-disable-next-line
-  },[props.loggedIn,data]);
+  }, [props.loggedIn, data]);
 
 
 
   return (
     <>
-      {(!loading && noNotes) && <h3 className='text-center' style={{ marginTop: "7rem" }}>{props.loggedIn?'CLICK ON ADD NOTES TO CREATE NOTES':'PLEASE LOGIN TO CREATE NOTES'}</h3>}
+      {(!loading && noNotes) && <h3 className='text-center' style={{ marginTop: "7rem" }}>{props.loggedIn ? 'CLICK ON ADD NOTES TO CREATE NOTES' : 'PLEASE LOGIN TO CREATE NOTES'}</h3>}
       {(loading) && <Spinner />}
       {(!loading || !noNotes) &&
         <>
@@ -77,7 +78,7 @@ export default function Notes(props) {
         </>
       }
 
-      {props.loggedIn&&<button type="button" className="btn btn-primary add-notes my-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop-1">
+      {props.loggedIn && <button type="button" className="btn btn-primary add-notes my-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop-1">
         Add Notes
       </button>}
       <Modal what={'Add'} empty={emptyData} action={'POST'} no={'-1'} />

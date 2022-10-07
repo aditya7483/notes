@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Notes from './components/Notes'
@@ -9,47 +9,47 @@ import Stats from './components/Stats';
 export default function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
+  // const link = 'http://localhost:3001'
+  const link = 'https://notes74.herokuapp.com'
 
   let authToken = localStorage.getItem('auth-token')
 
-  const fetchUserData= async()=>{
-    if(authToken)
-    {try {
-      let myauth = localStorage.getItem('auth-token')
-      let res = await fetch('https://notes74.herokuapp.com/api/auth/getuser', {
-      // let res = await fetch('http://localhost:3001/api/auth/getuser', {
-              method: 'GET',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'auth-token':myauth
-              }
-          })
-          let data = await res.json();
-          setLoggedIn(true)
-    } catch (err) {
-      setLoggedIn(false)
-    }}
-    else{
+  const fetchUserData = async () => {
+    if (authToken) {
+      try {
+        let myauth = localStorage.getItem('auth-token')
+        let res = await fetch(`${link}/api/auth/getuser`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': myauth
+          }
+        })
+        let data = await res.json();
+        setLoggedIn(true)
+      } catch (err) {
+        setLoggedIn(false)
+      }
+    }
+    else {
       setLoggedIn(false)
     }
-         
+
   }
 
-  useEffect(()=>{
-    if(!loggedIn)
-    {
+  useEffect(() => {
+    if (!loggedIn) {
       fetchUserData()
     }
   })
 
   const getData = async () => {
     if (authToken) {
-      let response = await fetch('https://notes74.herokuapp.com/api/notes/getnotes',{
-      // let response = await fetch('http://localhost:3001/api/notes/getNotes', {
+      let response = await fetch(`${link}/api/notes/getnotes`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token':`${authToken}`
+          'auth-token': `${authToken}`
         },
       });
       let parsedData = await response.json();
@@ -76,9 +76,9 @@ export default function App() {
   return (
     <div>
       <BrowserRouter>
-        <Navbar loggedIn={loggedIn}/>
+        <Navbar loggedIn={loggedIn} />
         <Routes>
-          <Route exact path="/" key="notes" element={<Notes loggedIn={loggedIn}/>} />
+          <Route exact path="/" key="notes" element={<Notes loggedIn={loggedIn} />} />
           <Route exact path="/stats" key="stats" element={<Stats statsData={dataArray} />} />
         </Routes>
       </BrowserRouter>
