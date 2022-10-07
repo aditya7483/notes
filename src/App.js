@@ -18,7 +18,7 @@ export default function App() {
     if (authToken) {
       try {
         let myauth = localStorage.getItem('auth-token')
-        let res = await fetch(`${link}/api/auth/getuser`, {
+        let res = await fetch(`https://notes74.herokuapp.com/api/auth/getuser`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export default function App() {
 
   const getData = async () => {
     if (authToken) {
-      let response = await fetch(`${link}/api/notes/getnotes`, {
+      let response = await fetch(`https://notes74.herokuapp.com/api/notes/getnotes`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

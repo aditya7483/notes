@@ -22,7 +22,7 @@ export default function Modal(props) {
   const create = async () => {
     try {
       let authToken = window.localStorage.getItem('auth-token')
-      let res = await fetch(`${link}/api/notes/createNote`, {
+      let res = await fetch(`https://notes74.herokuapp.com/api/notes/createNote`, {
         method: `POST`,
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export default function Modal(props) {
     try {
       let authToken = localStorage.getItem('auth-token')
 
-      let res = await fetch(`${link}/api/notes/updateNote/${props.itemId}`, {
+      let res = await fetch(`https://notes74.herokuapp.com/api/notes/updateNote/${props.itemId}`, {
         method: `PUT`,
         headers: {
           'Content-Type': 'application/json',

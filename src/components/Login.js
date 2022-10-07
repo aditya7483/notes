@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 
 export default function Login() {
 
-  const link = 'http://localhost:3001'
-  // const link = 'https://notes74.herokuapp.com'
+  // const link = 'http://localhost:3001'
+  const link = 'https://notes74.herokuapp.com'
   const [login, setLogin] = useState(true)
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +26,7 @@ export default function Login() {
   }
 
   const getAuth = async () => {
-    let res = await fetch(`${link}/api/auth/login`, {
+    let res = await fetch(`https://notes74.herokuapp.com/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ export default function Login() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    let res = await fetch(`${link}/api/auth/signup`, {
+    let res = await fetch(`https://notes74.herokuapp.com/api/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

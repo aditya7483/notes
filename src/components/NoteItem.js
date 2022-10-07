@@ -8,7 +8,7 @@ export default function NoteItem(props) {
   const handleDelete = async () => {
     let authToken = localStorage.getItem('auth-token')
     // eslint-disable-next-line
-    let res = await fetch(`${link}/api/notes/deleteNote/${props.id}`, {
+    let res = await fetch(`https://notes74.herokuapp.com/api/notes/deleteNote/${props.id}`, {
       method: `DELETE`,
       headers: {
         'Content-Type': 'application/json',
